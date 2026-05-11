@@ -11,8 +11,10 @@ class BackgroundVideoController extends Controller
 {
     public function upload(Request $request)
     {
+        $maxVideoKilobytes = (int) env('BACKGROUND_VIDEO_MAX_KB', 102400);
+
         $validated = $request->validate([
-            'video' => ['required', 'file', 'mimetypes:video/mp4,video/webm,video/ogg', 'max:102400'],
+            'video' => ['required', 'file', 'mimetypes:video/mp4,video/webm,video/ogg', 'max:' . $maxVideoKilobytes],
         ]);
 
         $file = $validated['video'];

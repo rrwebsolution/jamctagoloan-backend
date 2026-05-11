@@ -13,11 +13,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-         $middleware->validateCsrfTokens(except: [
-        'obs/update', // I-allow ang update gikan sa gawas
-         '/update-lyrics', // I-exclude kini para maka-update ang imong controller
-        '/api/*'
-    ]);
+        $middleware->prepend(\Illuminate\Http\Middleware\HandleCors::class);
+
+        $middleware->validateCsrfTokens(except: [
+            'obs/update', // I-allow ang update gikan sa gawas
+            '/update-lyrics', // I-exclude kini para maka-update ang imong controller
+            '/api/*',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
