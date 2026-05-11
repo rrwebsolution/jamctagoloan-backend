@@ -10,6 +10,20 @@ use App\Http\Controllers\Api\ObsSyncController;
 use App\Http\Controllers\Api\ObsStateController;
 use App\Http\Controllers\Api\BackgroundVideoController;
 use App\Http\Controllers\Api\PptPresentationController;
+use App\Http\Controllers\Api\AuthController;
+
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/google', [AuthController::class, 'google']);
+Route::get('/auth/users', [AuthController::class, 'users'])->middleware('auth:sanctum');
+Route::put('/auth/users/{user}', [AuthController::class, 'updateUser'])->middleware('auth:sanctum');
+Route::get('/auth/roles', [AuthController::class, 'roles'])->middleware('auth:sanctum');
+Route::post('/auth/roles', [AuthController::class, 'storeRole'])->middleware('auth:sanctum');
+Route::put('/auth/roles/{role}', [AuthController::class, 'updateRole'])->middleware('auth:sanctum');
+Route::delete('/auth/roles/{role}', [AuthController::class, 'destroyRole'])->middleware('auth:sanctum');
+Route::get('/auth/role-permissions', [AuthController::class, 'rolePermissions'])->middleware('auth:sanctum');
+Route::put('/auth/role-permissions', [AuthController::class, 'updateRolePermissions'])->middleware('auth:sanctum');
+Route::post('/auth/register', [AuthController::class, 'register'])->middleware('auth:sanctum');
+Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -34,3 +48,9 @@ Route::post('/background-videos/delete', [BackgroundVideoController::class, 'del
 
 Route::get('/ppt-presentations', [PptPresentationController::class, 'index']);
 Route::post('/ppt-presentations/sync', [PptPresentationController::class, 'sync']);
+
+
+
+
+
+
